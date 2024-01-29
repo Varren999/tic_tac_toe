@@ -1,6 +1,9 @@
-#include <iostream>
+#include "Game.h"
 
 void main()
 {
-	std::cout << "Hello";
+	setlocale(0, "");
+	srand(time(NULL));
+	Game game;
+	game.Play();
 }
