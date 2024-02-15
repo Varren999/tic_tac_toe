@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <Windows.h>
-
+#include <vector>
 
 class Game
 {
@@ -9,7 +9,7 @@ class Game
 	bool run = true;
 	std::string msg[2] = { "\x1b[32mИгрок победил!\x1b[0m\n","\x1b[32mПобедил компьютер!\x1b[0m\n" };
 	char cross = 'X', zero = 'O';
-	char Endaged[9] = {'1','2','3','4','5','6','7','8','9'};
+	std::vector<char> Endaged{'1','2','3','4','5','6','7','8','9'};
 
 	std::string screen = "-------------\n| 1 | 2 | 3 |\n-------------\n| 4 | 5 | 6 |\n-------------\n| 7 | 8 | 9 |\n-------------\n";
 	// 1 = 16, 2 = 20, 3 = 24, 4 = 44, 5 = 48, 6 = 52, 7 = 72, 8 = 76, 9 = 80
@@ -125,6 +125,19 @@ class Game
 			return false;
 		}
 		}
+	}
+
+	// Ничья
+	bool Is_Draw()
+	{
+		for (int i = 1; i <= Endaged.size(); i++)
+		{
+			if (Is_Endaged(i, (char)(i + 48)))
+				return true;
+		}
+		std::cout << "Ничья\nДля выход нажмите любую кнопку\n";
+		system("pause");
+		return false;
 	}
 
 	// Метод проверяет выигрышные ситуации.
@@ -262,20 +275,26 @@ class Game
 	}
 
 	// 
-	void ComLogic()
+	void ComLogic(char simbol)
 	{
 		bool cycle = true;
+		std::cout << "Ход компьютера\n";
+		std::cout << "Компьютер играет " << simbol << "\n";
 		do
 		{
 			num = rand() % 8 + 1;
 			if (Is_Endaged(num, zero))
 				cycle = false;
 		} while (cycle);
+		Sleep(2000);
 	}
 
 	//
-	void Player()
+	void Player(char simbol)
 	{
+		bool cycle = true;
+		std::cout << "Ход игрока\n";
+		std::cout << "Вы играете " << simbol << "\n";
 		std::cout << "Введите номер свободной ячейки: "; std::cin >> num;
 		if (!Is_Endaged(num, cross))
 		{
@@ -289,12 +308,12 @@ class Game
 	{
 		if (step == 0)
 		{
-			Player();
+			Player(cross);
 			step++;
 		}
 		else
 		{
-			ComLogic();
+			ComLogic(zero);
 			step = 0;
 		}
 	}
@@ -326,11 +345,12 @@ public:
 	// Игровой цикл.
 	void Play()
 	{
+		step = rand() % 2;
 		do
 		{
 			Screen();
 			Step();
 			Screen();
-		} while (Is_Winner());
+		} while (Is_Winner() && Is_Draw());
 	}
 };

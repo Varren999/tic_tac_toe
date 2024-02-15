@@ -1,3 +1,4 @@
 ﻿  main.cpp
 C:\Users\123\source\repos\tic_tac_toe\tic_tac_toe\main.cpp(4,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+C:\Users\123\source\repos\tic_tac_toe\tic_tac_toe\main.cpp(6,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   tic_tac_toe.vcxproj -> C:\Users\123\source\repos\tic_tac_toe\x64\Debug\tic_tac_toe.exe
