@@ -295,11 +295,16 @@ class Game
 		bool cycle = true;
 		std::cout << "Ход игрока\n";
 		std::cout << "Вы играете " << simbol << "\n";
-		std::cout << "Введите номер свободной ячейки: "; std::cin >> num;
-		if (!Is_Endaged(num, cross))
+		while (cycle)
 		{
-			std::cout << "\x1b[31mТакой ход уже был!\x1b[0m\n";
-			system("pause");
+			std::cout << "Введите номер свободной ячейки: "; std::cin >> num;
+			if (!Is_Endaged(num, cross))
+			{
+				std::cout << "\x1b[31mТакой ход уже был!\x1b[0m\n";
+				system("pause");
+			}
+			else
+				cycle = false;
 		}
 	}
 
