@@ -15,274 +15,108 @@ class Game
 	// 1 = 16, 2 = 20, 3 = 24, 4 = 44, 5 = 48, 6 = 52, 7 = 72, 8 = 76, 9 = 80
 
 	// Проверяем занято поле.
-	bool Is_Endaged(int num, char sim)
+	bool Is_Endaged(int value, char ch)
 	{
-		switch (num)
+		if (Endaged[value] != cross && Endaged[value] != zero)
 		{
-		case 1:
-		{
-			if (Endaged[0] == '1')
-			{
-				Endaged[0] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 2:
-		{
-			if (Endaged[1] == '2')
-			{
-				Endaged[1] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 3:
-		{
-			if (Endaged[2] == '3')
-			{
-				Endaged[2] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 4:
-		{
-			if (Endaged[3] == '4')
-			{
-				Endaged[3] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 5:
-		{
-			if (Endaged[4] == '5')
-			{
-				Endaged[4] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 6:
-		{
-			if (Endaged[5] == '6')
-			{
-				Endaged[5] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 7:
-		{
-			if (Endaged[6] == '7')
-			{
-				Endaged[6] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 8:
-		{
-			if (Endaged[7] == '8')
-			{
-				Endaged[7] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		case 9:
-		{
-			if (Endaged[8] == '9')
-			{
-				Endaged[8] = sim;
-				return true;
-			}
-			else
-				return false;
-		}break;
-
-		default:
-		{
-			std::cout << "Введены некорректные данные!\n";
-			system("pause");
+			Endaged[value] = ch;
+			return true;
+		}
+		else
 			return false;
-		}
-		}
 	}
 
 	// Ничья
 	bool Is_Draw()
 	{
-		for (int i = 1; i <= Endaged.size(); i++)
+		for (int i = 0; i < Endaged.size(); i++)
 		{
-			if (Is_Endaged(i, (char)(i + 48)))
-				return true;
+			if (Is_Endaged(i, (char)(i + 49)))
+				return false;
 		}
 		std::cout << "Ничья\nДля выход нажмите любую кнопку\n";
 		system("pause");
-		return false;
+		return true;
 	}
 
 	// Метод проверяет выигрышные ситуации.
 	bool Is_Winner()
 	{
-		// cross == 1 == 2 == 3
-		if (cross == Endaged[0] && Endaged[0] == Endaged[1] && Endaged[1] == Endaged[2])
+		// 1 == 2 == 3
+		if (Endaged[0] == Endaged[1] && Endaged[1] == Endaged[2])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
 
-		// cross == 4 == 5 == 6
-		if (cross == Endaged[3] && Endaged[3] == Endaged[4] && Endaged[4] == Endaged[5])
+		// 4 == 5 == 6
+		if (Endaged[3] == Endaged[4] && Endaged[4] == Endaged[5])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
 
-		// cross == 7 == 8 == 9
-		if (cross == Endaged[6] && Endaged[6] == Endaged[7] && Endaged[7] == Endaged[8])
+		// 7 == 8 == 9
+		if (Endaged[6] == Endaged[7] && Endaged[7] == Endaged[8])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
 
-		// cross == 1 == 5 == 9
-		if (cross == Endaged[0] && Endaged[0] == Endaged[4] && Endaged[4] == Endaged[8])
+		// 1 == 4 == 7
+		if (Endaged[0] == Endaged[3] && Endaged[3] == Endaged[6])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
 
-		// cross == 3 == 5 == 7
-		if (cross == Endaged[2] && Endaged[2] == Endaged[4] && Endaged[4] == Endaged[6])
+		// 2 == 5 == 8
+		if (Endaged[1] == Endaged[4] && Endaged[4] == Endaged[7])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
 
-		// cross == 1 == 4 == 7
-		if (cross == Endaged[0] && Endaged[0] == Endaged[3] && Endaged[3] == Endaged[6])
+		// 3 == 6 == 9
+		if (Endaged[2] == Endaged[5] && Endaged[5] == Endaged[8])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
 
-		// cross == 2 == 5 == 8
-		if (cross == Endaged[1] && Endaged[1] == Endaged[4] && Endaged[4] == Endaged[7])
+		// 1 == 5 == 9
+		if (Endaged[0] == Endaged[4] && Endaged[4] == Endaged[8])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
 
-		// cross == 3 == 6 == 9
-		if (cross == Endaged[2] && Endaged[2] == Endaged[5] && Endaged[5] == Endaged[8])
+		// 3 == 5 == 7
+		if (Endaged[2] == Endaged[4] && Endaged[4] == Endaged[6])
 		{
-			std::cout << msg[0];
+			std::cout << msg[step];
 			system("pause");
-			return false;
+			return true;
 		}
-
-		// zero == 1 == 2 == 3
-		if (zero == Endaged[0] && Endaged[0] == Endaged[1] && Endaged[1] == Endaged[2])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		// zero == 4 == 5 == 6
-		if (zero == Endaged[3] && Endaged[3] == Endaged[4] && Endaged[4] == Endaged[5])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		// zero == 7 == 8 == 9
-		if (zero == Endaged[6] && Endaged[6] == Endaged[7] && Endaged[7] == Endaged[8])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		// zero == 1 == 5 == 9
-		if (zero == Endaged[0] && Endaged[0] == Endaged[4] && Endaged[4] == Endaged[8])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		// zero == 3 == 5 == 7
-		if (zero == Endaged[2] && Endaged[2] == Endaged[4] && Endaged[4] == Endaged[6])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		// zero == 1 == 4 == 7
-		if (zero == Endaged[0] && Endaged[0] == Endaged[3] && Endaged[3] == Endaged[6])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		// zero == 2 == 5 == 8
-		if (zero == Endaged[1] && Endaged[1] == Endaged[4] && Endaged[4] == Endaged[7])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		// zero == 3 == 6 == 9
-		if (zero == Endaged[2] && Endaged[2] == Endaged[5] && Endaged[5] == Endaged[8])
-		{
-			std::cout << msg[1];
-			system("pause");
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	// 
-	void ComLogic(char simbol)
+	void ComLogic(char ch)
 	{
 		bool cycle = true;
 		std::cout << "Ход компьютера\n";
-		std::cout << "Компьютер играет " << simbol << "\n";
+		std::cout << "Компьютер играет " << ch << "\n";
 		do
 		{
-			num = rand() % 8 + 1;
+			num = rand() % 8;
 			if (Is_Endaged(num, zero))
 				cycle = false;
 		} while (cycle);
@@ -290,15 +124,15 @@ class Game
 	}
 
 	//
-	void Player(char simbol)
+	void Player(char ch)
 	{
 		bool cycle = true;
 		std::cout << "Ход игрока\n";
-		std::cout << "Вы играете " << simbol << "\n";
+		std::cout << "Вы играете " << ch << "\n";
 		while (cycle)
 		{
 			std::cout << "Введите номер свободной ячейки: "; std::cin >> num;
-			if (!Is_Endaged(num, cross))
+			if (!Is_Endaged(num - 1, cross))
 			{
 				std::cout << "\x1b[31mТакой ход уже был!\x1b[0m\n";
 				system("pause");
@@ -313,12 +147,12 @@ class Game
 	{
 		if (step == 0)
 		{
-			Player(cross);
-			step++;
+			ComLogic(zero);
+			step = 1;
 		}
 		else
 		{
-			ComLogic(zero);
+			Player(cross);
 			step = 0;
 		}
 	}
@@ -356,6 +190,6 @@ public:
 			Screen();
 			Step();
 			Screen();
-		} while (Is_Winner() && Is_Draw());
+		} while (!Is_Winner() && !Is_Draw());
 	}
 };
