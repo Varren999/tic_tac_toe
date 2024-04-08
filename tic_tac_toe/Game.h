@@ -5,16 +5,23 @@
 
 class Game
 {
-	int num{ 0 }, step{ 0 };
+	int num{ 0 };
+	int step{ 0 };
 	bool run = true;
-	std::string msg[2] = { "\x1b[32mИгрок победил!\x1b[0m\n","\x1b[32mПобедил компьютер!\x1b[0m\n" };
-	char cross = 'X', zero = 'O';
+	std::vector<std::string> msg{"\x1b[32mПобедил игрок!\x1b[0m\n","\x1b[32mПобедил компьютер!\x1b[0m\n"};
+	char cross = 'X';
+	char zero = 'O';
 	std::vector<char> Endaged{'1','2','3','4','5','6','7','8','9'};
 
-	std::string screen = "-------------\n| 1 | 2 | 3 |\n-------------\n| 4 | 5 | 6 |\n-------------\n| 7 | 8 | 9 |\n-------------\n";
 	// 1 = 16, 2 = 20, 3 = 24, 4 = 44, 5 = 48, 6 = 52, 7 = 72, 8 = 76, 9 = 80
+	std::string screen = "-------------\n| 1 | 2 | 3 |\n-------------\n| 4 | 5 | 6 |\n-------------\n| 7 | 8 | 9 |\n-------------\n";
 
-	// Проверяем занято поле.
+	/// <summary>
+	/// Метод проверяет занято поле.
+	/// </summary>
+	/// <param name="value"></param>
+	/// <param name="ch"></param>
+	/// <returns></returns>
 	bool Is_Endaged(int value, char ch)
 	{
 		if (Endaged[value] != cross && Endaged[value] != zero)
@@ -26,7 +33,10 @@ class Game
 			return false;
 	}
 
-	// Ничья
+	/// <summary>
+	/// Метод проверяет ничью.
+	/// </summary>
+	/// <returns></returns>
 	bool Is_Draw()
 	{
 		for (int i = 0; i < Endaged.size(); i++)
@@ -34,12 +44,15 @@ class Game
 			if (Is_Endaged(i, (char)(i + 49)))
 				return false;
 		}
-		std::cout << "Ничья\nДля выход нажмите любую кнопку\n";
+		std::cout << "Ничья\nДля выход нажмите любую кнопку.\n";
 		system("pause");
 		return true;
 	}
 
-	// Метод проверяет выигрышные ситуации.
+	/// <summary>
+	/// Метод проверяет выигрышные ситуации.
+	/// </summary>
+	/// <returns></returns>
 	bool Is_Winner()
 	{
 		// 1 == 2 == 3
@@ -108,7 +121,10 @@ class Game
 		return false;
 	}
 
-	// 
+	/// <summary>
+	/// Метод хода компьютера.
+	/// </summary>
+	/// <param name="ch"></param>
 	void ComLogic(char ch)
 	{
 		bool cycle = true;
@@ -116,14 +132,17 @@ class Game
 		std::cout << "Компьютер играет " << ch << "\n";
 		do
 		{
-			num = rand() % 8;
+			num = rand() % 9;
 			if (Is_Endaged(num, zero))
 				cycle = false;
 		} while (cycle);
 		Sleep(2000);
 	}
 
-	//
+	/// <summary>
+	/// Метод хода игрока.
+	/// </summary>
+	/// <param name="ch"></param>
 	void Player(char ch)
 	{
 		bool cycle = true;
@@ -132,17 +151,24 @@ class Game
 		while (cycle)
 		{
 			std::cout << "Введите номер свободной ячейки: "; std::cin >> num;
-			if (!Is_Endaged(num - 1, cross))
+			if (num > 0 && num < 10)
 			{
-				std::cout << "\x1b[31mТакой ход уже был!\x1b[0m\n";
-				system("pause");
+				if (!Is_Endaged(num - 1, cross))
+				{
+					std::cout << "\x1b[31mТакой ход уже был!\x1b[0m\n";
+					system("pause");
+				}
+				else
+					cycle = false;
 			}
 			else
-				cycle = false;
+				std::cout << "\x1b[31mЧисло должно быть от 1 до 9!\x1b[0m\n";
 		}
 	}
 
-	// 
+	/// <summary>
+	/// Метод переключает ходы.
+	/// </summary>
 	void Step()
 	{
 		if (step == 0)
@@ -157,7 +183,9 @@ class Game
 		}
 	}
 
-	// Отрисовка экрана.
+	/// <summary>
+	/// Метод отрисовки экрана.
+	/// </summary>
 	void Screen()
 	{
 		for (int i{ 0 }, m{0}, j{ 16 }; i < 9; i++)
@@ -181,7 +209,9 @@ class Game
 	}
 
 public:
-	// Игровой цикл.
+	/// <summary>
+	/// Метод игрового цикла.
+	/// </summary>
 	void Play()
 	{
 		step = rand() % 2;
